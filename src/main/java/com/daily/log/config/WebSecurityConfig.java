@@ -13,6 +13,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -43,8 +45,24 @@ public class WebSecurityConfig {
         return http.build();
     }
 
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+////                registry.addMapping("/**").allowedOrigins("http://192.168.0.58:3000");
+//                registry.addMapping("/**").allowedOriginPatterns("http://192.168.0.58:3000");
+//                registry.addMapping("/**").allowCredentials(true);
+//                registry.addMapping("/**").allowedHeaders("Authorization","Set-Cookie");
+//                registry.addMapping("/**").allowedMethods("POST","GET","PUT","DELETE");
+//                registry.addMapping("/**").exposedHeaders("Authorization","Set-Cookie");
+//            }
+//        };
+//    }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 }
+

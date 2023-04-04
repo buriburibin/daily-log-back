@@ -49,18 +49,6 @@ public class JwtTokenProvider implements InitializingBean {
         key = Keys.hmacShaKeyFor(encodedKey.getBytes());
     }
 
-    public String createAccessToken(Authentication authentication) {
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + tokenValidityInMs);
-
-        return Jwts.builder()
-                .setSubject(authentication.getName())
-                .setIssuedAt(now) // 발행시간
-                .signWith(key, SignatureAlgorithm.HS512) // 암호화
-                .setExpiration(validity) // 만료
-                .compact();
-    }
-
     public Authentication getAuthentication(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(key)
