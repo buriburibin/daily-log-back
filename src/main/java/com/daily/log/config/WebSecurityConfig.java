@@ -28,37 +28,28 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-
-        //session 사용 안함
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.exceptionHandling()
-                .accessDeniedHandler(jwtAccessDeniedHandler);
-
-        http.authorizeHttpRequests()
+        http.cors().and().csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().exceptionHandling()
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+                .and().authorizeHttpRequests()
                 .requestMatchers("/login/**").permitAll()
 //                .requestMatchers("/auth/**").authenticated()
-                .anyRequest().permitAll();
-
-        http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
+                .anyRequest().permitAll()
+                .and().apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
         return http.build();
     }
 
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-////                registry.addMapping("/**").allowedOrigins("http://192.168.0.58:3000");
-//                registry.addMapping("/**").allowedOriginPatterns("http://192.168.0.58:3000");
-//                registry.addMapping("/**").allowCredentials(true);
-//                registry.addMapping("/**").allowedHeaders("Authorization","Set-Cookie");
-//                registry.addMapping("/**").allowedMethods("POST","GET","PUT","DELETE");
-//                registry.addMapping("/**").exposedHeaders("Authorization","Set-Cookie");
-//            }
-//        };
-//    }
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("http://192.168.0.58:3000").allowCredentials(true).allowedHeaders("Content-Type")
+                        .allowedMethods("POST","GET","PUT","DELETE","OPTIONS");
+            }
+        };
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
