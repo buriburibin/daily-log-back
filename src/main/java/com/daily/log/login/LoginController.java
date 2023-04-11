@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URLEncoder;
 import java.util.Arrays;
@@ -66,8 +63,21 @@ public class LoginController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/test/go")
-    public ResponseEntity<String> test(HttpServletResponse response, @RequestBody UserInfoRequestDto userInfoRequestDto) {
-        return ResponseEntity.ok("success");
+    @RequestMapping("/login/logOut")
+    public ResponseEntity<String> test(HttpServletResponse response) {
+        Cookie httpCookie = new Cookie("refreshToken", "");
+        httpCookie.setMaxAge(0);
+        httpCookie.setPath("/");
+        httpCookie.setHttpOnly(true);
+
+        Cookie isLoginCookie = new Cookie("isLogin", "");
+        isLoginCookie.setMaxAge(0);
+        isLoginCookie.setPath("/");
+        isLoginCookie.setHttpOnly(false);
+
+        response.addCookie(isLoginCookie);
+        response.addCookie(httpCookie);
+
+        return ResponseEntity.ok("logOut");
     }
 }
