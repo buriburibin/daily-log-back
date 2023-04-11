@@ -2,6 +2,7 @@ package com.daily.log.dailyLogComment;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -31,6 +32,15 @@ public class DailyLogComment {
     @Column(name = "del_yn")
     private String delYn;
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "reg_date")
     private Date regDate;
+
+    public DailyLogComment(Long logSeq, String commentContent, String userId, String delYn) {
+        this.logSeq = logSeq;
+        this.commentContent = commentContent;
+        this.userId = userId;
+        this.delYn = delYn;
+    }
 }

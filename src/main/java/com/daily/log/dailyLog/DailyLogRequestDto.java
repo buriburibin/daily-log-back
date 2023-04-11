@@ -1,13 +1,14 @@
 package com.daily.log.dailyLog;
 
+import com.daily.log.dailyLogHtml.DailyLogHtml;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class DailyLogRequestDto {
@@ -20,21 +21,27 @@ public class DailyLogRequestDto {
     @NotBlank(message = "내용을 입력해주세요.")
     private String logContent;
 
+    private String logHtml;
+
     private String userId;
 
     private String logDate;
 
-    private Date setStartTime;
+    private String setStartTime;
 
-    private Date setEndTime;
+    private String setEndTime;
 
-    private Date startTime;
+    private String startTime;
 
-    private Date endTime;
+    private String endTime;
 
     private String delYn;
 
-    public DailyLog toEntity(){
-        return new DailyLog(logSeq,logTitle,logContent,userId,logDate,setStartTime,setEndTime,startTime,endTime,delYn,null);
+    public DailyLog toEntity(String delYn){
+        return new DailyLog(logSeq,logTitle,logContent,userId,logDate,setStartTime,setEndTime,startTime,endTime,delYn);
+    }
+
+    public DailyLogHtml toHtmlEntity(){
+        return new DailyLogHtml(logSeq,logHtml);
     }
 }

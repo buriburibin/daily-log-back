@@ -8,15 +8,15 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class DailyLogCommentRequestDto {
-
-    private Long commentSeq;
 
     private Long logSeq;
 
@@ -25,9 +25,7 @@ public class DailyLogCommentRequestDto {
 
     private String userId;
 
-    private String delYn;
-
     public DailyLogComment toEntity(){
-        return new DailyLogComment(commentSeq,logSeq,commentContent,userId,delYn,null);
+        return new DailyLogComment(logSeq,commentContent,userId,"N");
     }
 }

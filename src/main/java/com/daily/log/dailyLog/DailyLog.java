@@ -32,20 +32,17 @@ public class DailyLog {
     private String logDate;
 
     @Column(name = "set_start_time", nullable = false)
-    private Date setStartTime;
+    private String setStartTime;
 
     @Column(name = "set_end_time", nullable = false)
-    private Date setEndTime;
+    private String setEndTime;
 
     @Column(name = "start_time")
-    private Date startTime;
+    private String startTime;
 
     @Column(name = "end_time")
-    private Date endTime;
+    private String endTime;
 
     @Column(name = "del_yn")
     private String delYn;
-
-    @Column(name = "reg_date")
-    private Date regDate;
 }

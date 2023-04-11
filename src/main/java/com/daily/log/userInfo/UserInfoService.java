@@ -14,7 +14,7 @@ public class UserInfoService {
     final UserInfoRepository userInfoRepository;
 
     public List<UserInfoResponseDto> getUsersByTeamSeq(Long teamSeq) {
-        return userInfoRepository.findUsersByUserTeamSeq(teamSeq).stream()
+        return userInfoRepository.findUsersByUserTeamSeqOrderByUserName(teamSeq).stream()
                 .map(m->new UserInfoResponseDto(m))
                 .collect(Collectors.toList());
     }

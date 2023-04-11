@@ -4,10 +4,12 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class DailyLogResponseDto {
@@ -18,17 +20,27 @@ public class DailyLogResponseDto {
 
     private String logContent;
 
+    private String logHtml;
+
     private String userId;
+
+    private String logWriter;
+
+    private String delYn;
 
     private String logDate;
 
-    private Date setStartTime;
+    private String setStartTime;
 
-    private Date setEndTime;
+    private String setEndTime;
 
-    private Date startTime;
+    private String startTime;
 
-    private Date endTime;
+    private String endTime;
+
+    private boolean isTenant;
+
+    private boolean isMine;
 
     public DailyLogResponseDto(DailyLog dailyLog){
         this.logSeq = dailyLog.getLogSeq();
@@ -40,5 +52,6 @@ public class DailyLogResponseDto {
         this.setEndTime = dailyLog.getSetEndTime();
         this.startTime = dailyLog.getStartTime();
         this.endTime = dailyLog.getEndTime();
+        this.delYn = dailyLog.getDelYn();
     }
 }
