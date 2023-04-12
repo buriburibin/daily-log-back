@@ -25,6 +25,8 @@ public class UserInfoRequestDto {
     private String userName;
     private Long userTeamSeq;
 
+    private String authNum;
+
     public UserInfo toEntity(PasswordEncoder bCryptPasswordEncoder){
         return new UserInfo(userId, bCryptPasswordEncoder.encode(userId + ":" + userPwd),userName,userTeamSeq);
     }
