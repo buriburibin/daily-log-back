@@ -45,8 +45,11 @@ public class WebSecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://192.168.0.58:3000").allowCredentials(true).allowedHeaders("Content-Type")
-                        .allowedMethods("POST","GET","PUT","DELETE","OPTIONS");
+                registry.addMapping("/**")
+                        .allowedOriginPatterns("*")
+                        .allowedMethods("*")
+                        .allowedHeaders("Content-Type")
+                        .allowCredentials(true);
             }
         };
     }
