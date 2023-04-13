@@ -36,10 +36,24 @@ public class LoginController {
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("/login/changeUser")
+    public ResponseEntity<Map<String,Object>> changeUser(@RequestBody UserInfoRequestDto userInfoRequestDto) {
+        Map<String,Object> result = new HashMap<>();
+        loginService.changeUser(userInfoRequestDto,result);
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping("/login/checkExist")
     public ResponseEntity<Map<String,Object>> checkExist(@RequestBody String userId) {
         Map<String,Object> result = new HashMap<>();
         loginService.checkExist(userId,result);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/login/checkUser")
+    public ResponseEntity<Map<String,Object>> checkUser(@RequestBody String userId) {
+        Map<String,Object> result = new HashMap<>();
+        loginService.checkUser(userId,result);
         return ResponseEntity.ok(result);
     }
 

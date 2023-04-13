@@ -71,6 +71,40 @@ public class LoginService {
         result.put("msg","회원가입이 완료되었습니다.");
     }
 
+    @Transactional
+    public void changeUser(UserInfoRequestDto userInfoRequestDto,Map<String,Object> result){ // 회원가입
+        try {
+            if(userInfoService.getUserById(userInfoRequestDto.getUserId()) == null){
+                result.put("success",false);
+                result.put("msg","존재하지 않는 사용자입니다.");
+                return;
+            }
+        } catch (RuntimeException e){
+            result.put("success",false);
+            result.put("msg","존재하지 않는 사용자입니다.");
+        }
+        if(userInfoRequestDto.getUserPwd().isEmpty()){
+            result.put("success",false);
+            result.put("msg","비밀번호를 입력하여 주십시오.");
+            return;
+        } else {
+            if(!userInfoRequestDto.getAuthNum().equals(userAuthService.getUserAuthByUsrId(userInfoRequestDto.getUserId()).getAuthNum())){
+                result.put("success",false);
+                result.put("msg","인증번호를 잘 못 입력하였습니다.");
+                return;
+            } else {
+                if(userInfoRequestDto.getUserName().isEmpty()){
+                    result.put("success",false);
+                    result.put("msg","이름을 입력하여 주십시오.");
+                    return;
+                }
+            }
+        }
+        userInfoService.createUser(userInfoRequestDto);
+        result.put("success",true);
+        result.put("msg","정보 변경이 완료되었습니다.");
+    }
+
     @Transactional()
     public SignInResponseDto signIn(UserInfoRequestDto userInfoRequestDto, Map<String,Object> result) {
         UserDetails userDetails = null;
@@ -131,6 +165,23 @@ public class LoginService {
         } catch (RuntimeException e){
             if(e.getMessage().equals("User not found")){
                 result.put("success",true);
+            }
+        }
+        // 중복체크
+    }
+
+    public void checkUser(String userId, Map<String,Object> result){ // 회원가입
+        try {
+            UserInfoResponseDto userInfoResponseDto = userInfoService.getUserById(userId);
+            if(userInfoResponseDto != null){
+                result.put("success",true);
+                result.put("userInfo",userInfoResponseDto);
+            } else {
+                result.put("success",false);
+            }
+        } catch (RuntimeException e){
+            if(e.getMessage().equals("User not found")){
+                result.put("success",false);
             }
         }
         // 중복체크
