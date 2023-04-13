@@ -54,16 +54,22 @@ public class LoginService {
             result.put("msg","비밀번호를 입력하여 주십시오.");
             return;
         } else {
-            if(!userInfoRequestDto.getAuthNum().equals(userAuthService.getUserAuthByUsrId(userInfoRequestDto.getUserId()).getAuthNum())){
-                result.put("success",false);
-                result.put("msg","인증번호를 잘 못 입력하였습니다.");
-                return;
-            } else {
-                if(userInfoRequestDto.getUserName().isEmpty()){
+            try {
+                if(!userInfoRequestDto.getAuthNum().equals(userAuthService.getUserAuthByUsrId(userInfoRequestDto.getUserId()).getAuthNum())){
                     result.put("success",false);
-                    result.put("msg","이름을 입력하여 주십시오.");
+                    result.put("msg","인증번호를 잘 못 입력하였습니다.");
                     return;
+                } else {
+                    if(userInfoRequestDto.getUserName().isEmpty()){
+                        result.put("success",false);
+                        result.put("msg","이름을 입력하여 주십시오.");
+                        return;
+                    }
                 }
+            } catch (Exception e){
+                result.put("success",false);
+                result.put("msg","인증받지 않은 메일입니다.");
+                return;
             }
         }
         userInfoService.createUser(userInfoRequestDto);
